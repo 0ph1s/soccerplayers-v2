@@ -239,7 +239,7 @@ export function Dashboard({ modo, setModo, pool, setPool, estado }) {
                 onClick={abrirGaveta}
                 aria-expanded={menuMovel}
                 aria-label={t("nav.abrirMenu")}
-                className="grid size-9 cursor-pointer place-items-center rounded-lg border border-border lg:hidden"
+                className="grid size-9 cursor-pointer place-items-center rounded-lg transition-colors duration-300 hover:bg-foreground/[0.08] lg:hidden"
               >
                 <Menu className="size-4" aria-hidden="true" />
               </button>
