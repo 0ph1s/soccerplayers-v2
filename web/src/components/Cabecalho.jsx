@@ -80,7 +80,7 @@ export function BotaoTema({ tema, alternar, className }) {
       aria-label={escuro ? t("nav.temaClaro") : t("nav.temaEscuro")}
       title={escuro ? t("nav.temaClaro") : t("nav.temaEscuro")}
       className={cn(
-        "group flex size-9 cursor-pointer items-center justify-center border border-rule-strong transition-colors duration-300 hover:bg-lime hover:text-lime-ink",
+        "group flex size-9 cursor-pointer items-center justify-center border border-rule transition-colors duration-300 hover:border-lime hover:bg-lime hover:text-lime-ink",
         className,
       )}
     >
@@ -231,7 +231,7 @@ export function Cabecalho() {
       ref={raiz}
       className={cn(
         "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,padding] duration-500 ease-out",
-        rolou ? "border-rule bg-background/85 py-2 backdrop-blur-md" : "border-transparent py-4",
+        rolou ? "border-rule bg-background/85 backdrop-blur-md" : "border-transparent",
       )}
     >
       <a
@@ -240,7 +240,12 @@ export function Cabecalho() {
       >
         {t("nav.pular")}
       </a>
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-6 px-4 md:px-8">
+      <div
+        className={cn(
+          "mx-auto flex max-w-[1440px] items-center justify-between gap-6 px-4 transition-[padding] duration-500 ease-out md:px-8",
+          rolou ? "py-2.5" : "py-4",
+        )}
+      >
         <a href="#inicio" data-entrada aria-label={t("nav.inicio")} className="display text-lg leading-none font-bold tracking-tight">
           SOCCER<span className="text-muted-foreground">/</span>ANALYTICS
         </a>
@@ -264,7 +269,7 @@ export function Cabecalho() {
             <li data-entrada>
               <Link
                 para="/dashboard"
-                className="inline-flex items-center gap-1.5 border border-rule-strong px-2.5 py-1 text-sm transition-colors duration-300 hover:bg-lime hover:text-lime-ink"
+                className="inline-flex items-center gap-1.5 border border-rule px-2.5 py-1 text-sm transition-colors duration-300 hover:border-lime hover:bg-lime hover:text-lime-ink"
               >
                 <LayoutDashboard className="size-3.5" aria-hidden="true" />
                 {t("nav.dashboard")}
@@ -291,7 +296,7 @@ export function Cabecalho() {
             aria-controls="menu-movel"
             aria-label={menuAberto ? t("nav.fecharMenu") : t("nav.abrirMenu")}
             onClick={() => (menuAberto ? fecharMenu() : abrirMenu())}
-            className="relative flex size-9 cursor-pointer items-center justify-center border border-rule-strong"
+            className="relative flex size-9 cursor-pointer items-center justify-center border border-rule transition-colors duration-300 hover:border-foreground"
           >
             {/* Os dois ícones ficam sobrepostos e trocam com giro e esmaecimento. */}
             <Menu
