@@ -175,11 +175,16 @@
         color: var(--muted-foreground);
     }
     /* Mascara usada pelas revelações de texto do GSAP. */
+    /* A folga acima e abaixo evita cortar acentos de maiúsculas (Ê, Á, Ú) e cedilhas,
+       já que a entrelinha dos títulos é menor que a altura desses sinais. As margens
+       negativas devolvem o espaço, então o layout não muda. */
     .linha-mascara {
         display: block;
         overflow: hidden;
-        padding-bottom: 0.06em;
-        margin-bottom: -0.06em;
+        padding-top: 0.24em;
+        margin-top: -0.24em;
+        padding-bottom: 0.14em;
+        margin-bottom: -0.14em;
     }
     .linha-mascara > span {
         display: block;
