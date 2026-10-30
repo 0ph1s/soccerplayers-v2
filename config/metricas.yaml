@@ -1,0 +1,33 @@
+# Definição dos índices. Fixada antes da análise dos resultados.
+#
+# Cada variável diz de onde vem o valor (fonte) e qual peso ela tem na média.
+# Fonte "snapshot": valor já padronizado por 90 minutos, vindo de data/manual/snapshot_valores_v1.csv.
+# Fonte "aparicoes": calculada a partir de appearances.csv (raw), por 90 minutos.
+# Fonte "jogador": atributo do jogador em players.csv (raw), sem padronização.
+
+indices:
+  tecnico:
+    descricao: "Precisão, controle e inteligência com a bola"
+    variaveis:
+      - {nome: accuratePasses, fonte: snapshot, peso: 1.0}
+      - {nome: accurateFinalThirdPasses, fonte: snapshot, peso: 1.5}
+      - {nome: keyPasses, fonte: snapshot, peso: 1.5}
+      - {nome: expectedAssists, fonte: snapshot, peso: 1.5}
+      - {nome: successfulDribbles, fonte: snapshot, peso: 1.0}
+      - {nome: assists, fonte: aparicoes, peso: 0.8}
+      - {nome: goals, fonte: aparicoes, peso: 0.7}
+
+  explosivo:
+    descricao: "Capacidade física, velocidade, força e ganho de disputa (proxies)"
+    variaveis:
+      - {nome: successfulDribbles, fonte: snapshot, peso: 1.2}
+      - {nome: aerialDuelsWon, fonte: snapshot, peso: 1.5}
+      - {nome: groundDuelsWon, fonte: snapshot, peso: 1.3}
+      - {nome: metersCoveredSprinting, fonte: snapshot, peso: 1.2}
+      - {nome: numberOfSprints, fonte: snapshot, peso: 1.0}
+      - {nome: height_in_cm, fonte: jogador, peso: 0.8}
+
+# Regras de cálculo. Os valores em `peso` são usados na média ponderada dos percentis.
+regras:
+  minimo_minutos_temporada: 450   # abaixo disso a temporada não entra em métricas por 90
+  minimo_jogadores_grupo: 5       # grupo posicional menor que isso cai para a posição ampla

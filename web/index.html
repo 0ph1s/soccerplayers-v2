@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Pesquisa sobre academias de formação de futebol e o perfil técnico e explosivo dos jogadores que elas revelam." />
+    <title>Soccer Analytics: a ciência do talento</title>
+    <script>
+      // Aplica tema e idioma salvos antes da primeira pintura, para não piscar a cor errada.
+      (function () {
+        try {
+          var tema = localStorage.getItem("sa-tema");
+          if (tema !== "claro" && tema !== "escuro") {
+            tema = window.matchMedia("(prefers-color-scheme: dark)").matches ? "escuro" : "claro";
+          }
+          if (tema === "escuro") document.documentElement.classList.add("dark");
+          var idioma = localStorage.getItem("sa-idioma");
+          var tags = { pt: "pt-BR", es: "es", en: "en", fr: "fr" };
+          if (tags[idioma]) document.documentElement.lang = tags[idioma];
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

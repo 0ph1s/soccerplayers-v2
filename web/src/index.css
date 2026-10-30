@@ -1,0 +1,215 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource-variable/manrope";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+    --font-heading: "Space Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Space Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+    --color-surface: var(--surface);
+    --color-rule: var(--border);
+    --color-rule-strong: var(--rule-strong);
+    --color-lime: var(--lime);
+    --color-lime-ink: var(--lime-ink);
+    --color-club-barcelona: var(--club-barcelona);
+    --color-club-real-madrid: var(--club-real-madrid);
+    --color-club-manchester-city: var(--club-manchester-city);
+    --color-club-liverpool: var(--club-liverpool);
+
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* Tema claro: papel de giz, tinta preta, lima só como sinal. */
+:root {
+    --background: #f4f3ee;
+    --foreground: #171717;
+    --surface: #fbfbf8;
+    --card: #ffffff;
+    --card-foreground: #171717;
+    --popover: #ffffff;
+    --popover-foreground: #171717;
+    --primary: #171717;
+    --primary-foreground: #f4f3ee;
+    --secondary: #e9e8e1;
+    --secondary-foreground: #171717;
+    --muted: #eae9e2;
+    --muted-foreground: #5f5f59;
+    --accent: #c5f467;
+    --accent-foreground: #171717;
+    --destructive: #b42318;
+    --border: #d8d7ce;
+    --input: #c9c8bf;
+    --ring: #171717;
+    --rule-strong: #171717;
+    --lime: #c5f467;
+    --lime-ink: #171717;
+
+    /* Academias: cor + forma identificam cada uma em todos os gráficos. */
+    --club-barcelona: #a50044;
+    --club-real-madrid: #9c7a12;
+    --club-manchester-city: #2b86c2;
+    --club-liverpool: #d8362a;
+
+    --chart-1: #171717;
+    --chart-2: #5f5f59;
+    --chart-3: #9a9a92;
+    --chart-4: #c9c8bf;
+    --chart-5: #e9e8e1;
+    --radius: 0.125rem;
+}
+
+.dark {
+    --background: #101110;
+    --foreground: #f1f1eb;
+    --surface: #191b19;
+    --card: #191b19;
+    --card-foreground: #f1f1eb;
+    --popover: #191b19;
+    --popover-foreground: #f1f1eb;
+    --primary: #f1f1eb;
+    --primary-foreground: #101110;
+    --secondary: #222522;
+    --secondary-foreground: #f1f1eb;
+    --muted: #1e211e;
+    --muted-foreground: #9b9d95;
+    --accent: #c5f467;
+    --accent-foreground: #101110;
+    --destructive: #ff7a6b;
+    --border: #2c302c;
+    --input: #3a3f3a;
+    --ring: #c5f467;
+    --rule-strong: #f1f1eb;
+    --lime: #c5f467;
+    --lime-ink: #101110;
+
+    --club-barcelona: #e2507f;
+    --club-real-madrid: #e3bf55;
+    --club-manchester-city: #6dbdeb;
+    --club-liverpool: #ff6b57;
+
+    --chart-1: #f1f1eb;
+    --chart-2: #9b9d95;
+    --chart-3: #6b6e67;
+    --chart-4: #3a3f3a;
+    --chart-5: #222522;
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+    html {
+        @apply font-sans;
+        -webkit-text-size-adjust: 100%;
+    }
+    body {
+        @apply bg-background text-foreground antialiased;
+        font-feature-settings: "ss01";
+    }
+    ::selection {
+        background: var(--lime);
+        color: var(--lime-ink);
+    }
+    :focus-visible {
+        outline: 2px solid var(--ring);
+        outline-offset: 3px;
+    }
+    section[id] {
+        scroll-margin-top: 4.5rem;
+    }
+}
+
+@layer components {
+    /* Números sempre em mono tabular: os dados são o protagonista. */
+    .num {
+        font-family: var(--font-mono);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.01em;
+    }
+    .display {
+        font-family: var(--font-display);
+        letter-spacing: -0.045em;
+        line-height: 0.88;
+    }
+    .rotulo {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        line-height: 1rem;
+        color: var(--muted-foreground);
+    }
+    /* Mascara usada pelas revelações de texto do GSAP. */
+    .linha-mascara {
+        display: block;
+        overflow: hidden;
+        padding-bottom: 0.06em;
+        margin-bottom: -0.06em;
+    }
+    .linha-mascara > span {
+        display: block;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+    /* Aplicada só durante a troca de tema, para a transição não pesar no resto do tempo. */
+    .tema-transicao,
+    .tema-transicao *,
+    .tema-transicao *::before,
+    .tema-transicao *::after {
+        transition:
+            background-color 0.35s ease,
+            color 0.35s ease,
+            border-color 0.35s ease,
+            fill 0.35s ease,
+            stroke 0.35s ease !important;
+    }
+}
+
+/* Recharts: textos e linhas herdam o tema. */
+.recharts-cartesian-axis-tick-value {
+    font-family: var(--font-mono);
+    font-size: 11px;
+}
+.recharts-surface:focus,
+.recharts-wrapper:focus {
+    outline: none;
+}

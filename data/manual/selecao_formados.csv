@@ -1,0 +1,36 @@
+player_id,clube,nome,position,sub_position,date_of_birth,estreia,formado_confirmado,fonte_conferencia
+636688,Barcelona,Alejandro Balde,Defender,Left-Back,2003-10-18,2021-09-14,sim, (conhecimento previo): La Masia desde a infancia
+937958,Barcelona,Lamine Yamal,Attack,Right Winger,2007-07-13,2023-04-29,sim, (conhecimento previo): La Masia desde 2013
+646740,Barcelona,Gavi,Midfield,Central Midfield,2004-08-05,2021-08-29,sim, (conhecimento previo): La Masia desde a infancia
+962110,Barcelona,Pau Cubarsí,Defender,Centre-Back,2007-01-22,2024-01-18,sim, (conhecimento previo): La Masia desde a infancia
+636703,Barcelona,Fermín López,Midfield,Attacking Midfield,2003-05-11,2023-08-27,sim, (conhecimento previo): entrou na La Masia por volta dos 16 (2019)
+705395,Barcelona,Gerard Martín,Defender,Centre-Back,2002-02-26,2024-08-17,sim, (conhecimento previo): La Masia desde a infancia
+466810,Barcelona,Ansu Fati,Attack,Left Winger,2002-10-31,2019-08-25,sim, (conhecimento previo): La Masia desde 2012
+331505,Barcelona,Óscar Mingueza,Defender,Right-Back,1999-05-13,2020-11-24,sim, (conhecimento previo): La Masia desde a infancia
+636695,Barcelona,Marc Casadó,Midfield,Defensive Midfield,2003-09-14,2022-11-01,sim, (conhecimento previo): La Masia desde a infancia
+283170,Barcelona,Iñaki Peña,Goalkeeper,Goalkeeper,1999-03-02,2022-11-01,sim, (conhecimento previo): entrou na La Masia na adolescencia (~2015)
+284854,Barcelona,Carles Aleñá,Midfield,Central Midfield,1998-01-05,2016-11-30,sim, (conhecimento previo): La Masia desde a infancia
+331511,Barcelona,Riqui Puig,Midfield,Central Midfield,1999-08-13,2020-01-19,sim, (conhecimento previo): La Masia desde a infancia
+466805,Barcelona,Nico González,Midfield,Defensive Midfield,2002-01-03,2021-08-15,sim, (conhecimento previo): La Masia desde a adolescencia
+1018920,Barcelona,Marc Bernal,Midfield,Defensive Midfield,2007-05-26,2024-08-17,sim, (conhecimento previo): La Masia desde a infancia
+937955,Barcelona,Héctor Fort,Defender,Right-Back,2006-08-02,2023-12-13,sim,(conhecimento previo): La Masia desde a adolescencia
+314353,Liverpool,Trent Alexander-Arnold,Defender,Right-Back,1998-10-07,2016-12-14,sim, (conhecimento previo): academia do Liverpool desde a infancia
+433188,Liverpool,Curtis Jones,Midfield,Central Midfield,2001-01-30,2019-12-07,sim, (conhecimento previo): academia do Liverpool desde a infancia
+565822,Liverpool,Harvey Elliott,Midfield,Attacking Midfield,2003-04-04,2020-01-02,sim,https://lfchistory.net/players/1337 | CASO LIMITE: veio do Fulham aos 16 (jul/2019); 4+ temporadas no Liverpool antes dos 21 (regra CIES)
+340918,Liverpool,Caoimhín Kelleher,Goalkeeper,Goalkeeper,1998-11-23,2020-02-04,sim, (conhecimento previo): entrou no Liverpool por volta dos 16
+624258,Liverpool,Conor Bradley,Defender,Right-Back,2003-07-09,2023-11-30,sim,(conhecimento previo): entrou no Liverpool aos 16 (2019)
+632349,Liverpool,Jarell Quansah,Defender,Centre-Back,2003-01-29,2023-08-27,sim,(conhecimento previo): academia do Liverpool desde a infancia
+503680,Liverpool,Neco Williams,Defender,Left-Back,2001-04-13,2020-01-05,sim, (conhecimento previo): entrou no Liverpool na adolescencia
+503679,Liverpool,Rhys Williams,Defender,Centre-Back,2001-02-03,2020-10-21,sim,(conhecimento previo): academia do Liverpool desde a infancia
+406635,Manchester City,Phil Foden,Midfield,Attacking Midfield,2000-05-28,2017-11-21,sim,(conhecimento previo): academia do City desde a infancia
+701057,Manchester City,Rico Lewis,Defender,Right-Back,2004-11-21,2022-08-13,sim, academia do City desde a infancia
+743413,Manchester City,Nico O'Reilly,Defender,Left-Back,2005-03-21,2024-08-10,sim, academia do City desde a infancia
+466794,Manchester City,Eric García,Defender,Centre-Back,2001-01-09,2019-09-21,sim,"https://en.wikipedia.org/wiki/Eric_Garc%C3%ADa_(footballer,_born_2001) | CASO LIMITE: base do Barca ate os 16; City 2017-2021 (4 temporadas dos 16 aos 20), conta como formado no City pela regra CIES"
+661207,Manchester City,Oscar Bobb,Attack,Right Winger,2003-07-12,2023-09-02,sim, (conhecimento previo): veio do Valerenga aos 16 (2019); 3+ temporadas no City antes dos 21
+566799,Manchester City,James Trafford,Goalkeeper,Goalkeeper,2002-10-10,2025-08-16,sim,"https://www.premierleague.com/en/news/4363825/man-city-re-sign-goalkeeper-james-trafford-from-burnley | entrou na academia do City em 2015, aos 12"
+568177,Manchester City,Cole Palmer,Midfield,Attacking Midfield,2002-05-06,2020-10-27,sim, (conhecimento previo): academia do City desde a infancia
+935245,Real Madrid,Raúl Asencio,Defender,Centre-Back,2003-02-13,2024-11-09,sim,"https://en.wikipedia.org/wiki/Ra%C3%BAl_Asencio_(footballer,_born_2003) | veio do Las Palmas e entrou na base do Real Madrid em 2017, aos 14"
+225020,Real Madrid,Mariano Díaz,Attack,Centre-Forward,1993-08-01,2016-08-27,sim," Entra no corte final (estreia 2016, 2226 min)"
+935230,Real Madrid,Gonzalo García,Attack,Centre-Forward,2004-03-24,2023-11-26,sim, (conhecimento previo): base do Real Madrid desde a infancia
+282429,Real Madrid,Sergio Reguilón,Defender,Left-Back,1996-12-16,2018-10-02,sim,(conhecimento previo): base do Real Madrid desde a infancia
+398073,Real Madrid,Achraf Hakimi,Defender,Right-Back,1998-11-04,2017-10-01,sim, (conhecimento previo): base do Real Madrid desde a infancia

@@ -1,0 +1,29 @@
+# Categorias posicionais usadas para comparar jogadores.
+# Ordem de resolução: sub_posicao (se conhecida) e depois posicao.
+# A posição "Defender" sem sub_posicao é tratada como lateral, como no projeto original.
+
+sub_posicoes:
+  Goalkeeper: goleiro
+  Centre-Back: zagueiro
+  Left-Back: lateral
+  Right-Back: lateral
+  Defensive Midfield: meio_campista_defensivo_central
+  Central Midfield: meio_campista_defensivo_central
+  Attacking Midfield: meia_ofensivo_ponta
+  Left Winger: meia_ofensivo_ponta
+  Right Winger: meia_ofensivo_ponta
+  Centre-Forward: centroavante
+
+posicoes:
+  Goalkeeper: goleiro
+  Defender: zagueiro
+  Midfield: meio_campista_defensivo_central
+  Attack: centroavante
+
+ordem:
+  - goleiro
+  - zagueiro
+  - lateral
+  - meio_campista_defensivo_central
+  - meia_ofensivo_ponta
+  - centroavante
