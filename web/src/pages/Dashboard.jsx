@@ -10,7 +10,7 @@ import { GraficoMedianas } from "@/components/dashboard/GraficoMedianas";
 import { GraficoRanking } from "@/components/dashboard/GraficoRanking";
 import { TabelaDashboard } from "@/components/dashboard/TabelaDashboard";
 import { useIdioma } from "@/i18n";
-import { COM_MOVIMENTO, gsap, useGSAP } from "@/lib/animacao";
+import { COM_MOVIMENTO, gsap, ScrollSmoother, ScrollTrigger, useGSAP } from "@/lib/animacao";
 import { ACADEMIAS, arquivoResultados, comandoResultados, useResultadosDosDoisPools } from "@/lib/dados";
 import { useTema } from "@/lib/tema";
 import { cn } from "@/lib/utils";
@@ -59,6 +59,8 @@ export function Dashboard({ modo, setModo, pool, setPool, estado }) {
   const buscaRef = useRef(null);
   const buscaMovelRef = useRef(null);
   const principal = useRef(null);
+  const envoltorio = useRef(null);
+  const conteudo = useRef(null);
   const ativo = useCartaoAtivo();
 
   useEffect(() => {
@@ -123,10 +125,37 @@ export function Dashboard({ modo, setModo, pool, setPool, estado }) {
     { scope: principal, dependencies: [Boolean(dados)], revertOnUpdate: true },
   );
 
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(COM_MOVIMENTO, () => {
+        const smoother = ScrollSmoother.create({
+          wrapper: envoltorio.current,
+          content: conteudo.current,
+          smooth: 1.05,
+          smoothTouch: false,
+        });
+        return () => smoother.kill();
+      });
+      return () => mm.revert();
+    },
+    { scope: envoltorio },
+  );
+
+  // Recolher a barra muda a largura do conteúdo e a altura dos cartões: reposiciona a rolagem depois.
+  useEffect(() => {
+    const espera = window.setTimeout(() => ScrollTrigger.refresh(), 550);
+    return () => window.clearTimeout(espera);
+  }, [recolhido]);
+
   const irPara = (id) => {
     setMenuMovel(false);
     const reduzir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    document.getElementById(id)?.scrollIntoView({ behavior: reduzir ? "auto" : "smooth", block: "start" });
+    const alvo = document.getElementById(id);
+    if (!alvo) return;
+    const smoother = ScrollSmoother.get();
+    if (smoother) smoother.scrollTo(alvo, !reduzir, "top 24px");
+    else alvo.scrollIntoView({ behavior: reduzir ? "auto" : "smooth", block: "start" });
   };
 
   const propsLateral = {
@@ -157,10 +186,10 @@ export function Dashboard({ modo, setModo, pool, setPool, estado }) {
     : null;
 
   return (
-    <div className="min-h-svh bg-background text-foreground lg:flex">
+    <div className="min-h-svh bg-background text-foreground">
       <aside
         className={cn(
-          "sticky top-0 hidden h-svh shrink-0 border-r border-border bg-card/40 transition-[width] duration-500 ease-out lg:block",
+          "fixed inset-y-0 left-0 z-30 hidden border-r border-border bg-background transition-[width] duration-500 ease-out lg:block",
           recolhido ? "w-[72px]" : "w-64",
         )}
       >
@@ -193,7 +222,15 @@ export function Dashboard({ modo, setModo, pool, setPool, estado }) {
         </div>
       )}
 
-      <main ref={principal} className="min-w-0 flex-1 px-4 py-5 md:px-6 lg:px-8 lg:py-7">
+      <div id="smooth-wrapper" ref={envoltorio}>
+        <div id="smooth-content" ref={conteudo}>
+      <main
+        ref={principal}
+        className={cn(
+          "min-w-0 px-4 py-5 transition-[padding-left] duration-500 ease-out md:px-6 lg:py-7 lg:pr-8",
+          recolhido ? "lg:pl-[calc(72px+2rem)]" : "lg:pl-[calc(16rem+2rem)]",
+        )}
+      >
         <div className="mx-auto flex max-w-[1280px] flex-col gap-5">
           <header className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
@@ -268,6 +305,8 @@ export function Dashboard({ modo, setModo, pool, setPool, estado }) {
           )}
         </div>
       </main>
+        </div>
+      </div>
     </div>
   );
 }
