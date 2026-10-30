@@ -15,8 +15,20 @@ function doisDigitos(valor) {
 function ArteAmostra({ jogadores }) {
   return (
     <svg viewBox="-6 -6 112 112" className="h-full w-full overflow-visible" aria-hidden="true" data-arte>
-      {/* Quadrante em que os dois índices passam de 50. */}
-      <rect data-quadrante x="50" y="0" width="50" height="50" fill="var(--lime)" />
+      {/* Quadrante em que os dois índices passam de 50 (meio da escala, não um limite estatístico).
+          Tom leve e contorno tracejado: guia visual, sem dominar os pontos. */}
+      <rect
+        data-quadrante
+        x="50"
+        y="0"
+        width="50"
+        height="50"
+        fill="var(--lime)"
+        fillOpacity="0.12"
+        stroke="var(--muted-foreground)"
+        strokeWidth="0.25"
+        strokeDasharray="1.2 1.2"
+      />
       <g data-grade stroke="var(--muted-foreground)" strokeWidth="0.18" opacity="0.55">
         {MARCAS_GRADE.flatMap((x) =>
           MARCAS_GRADE.map((y) => (
@@ -37,7 +49,7 @@ function ArteAmostra({ jogadores }) {
         <text x="95" y="104.5">100</text>
         <text x="-4.8" y="51">50</text>
         <text x="-5.6" y="1.5">100</text>
-        <text x="51.5" y="3.6" fill="var(--lime-ink)">&gt; 50 / &gt; 50</text>
+        <text x="51.5" y="3.6">&gt; 50 / &gt; 50</text>
       </g>
       <g>
         {jogadores.map((jogador) => {
