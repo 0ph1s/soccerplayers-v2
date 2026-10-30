@@ -205,6 +205,28 @@
     z-index: 2;
 }
 
+/* Troca de página (ver lib/rota.jsx): a página atual sobe e esmaece; a nova entra subindo de baixo.
+   A classe só existe durante a transição, então não interfere na troca de tema. */
+html.transicao-pagina::view-transition-old(root) {
+    animation: saida-pagina 0.32s cubic-bezier(0.4, 0, 1, 1) both;
+}
+html.transicao-pagina::view-transition-new(root) {
+    animation: entrada-pagina 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+}
+@keyframes saida-pagina {
+    to {
+        opacity: 0;
+        transform: translateY(-24px) scale(0.985);
+        filter: blur(4px);
+    }
+}
+@keyframes entrada-pagina {
+    from {
+        opacity: 0;
+        transform: translateY(32px);
+    }
+}
+
 /* Recharts: textos e linhas herdam o tema. */
 .recharts-cartesian-axis-tick-value {
     font-family: var(--font-mono);
