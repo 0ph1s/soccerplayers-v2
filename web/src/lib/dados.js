@@ -9,15 +9,34 @@ export const POSICOES = ["Goalkeeper", "Defender", "Midfield", "Attack"];
 
 // A chave é o nome do clube como aparece nos JSONs. Cor e forma se repetem em todos os gráficos.
 export const ACADEMIAS = {
-  Barcelona: { academia: "La Masia", clube: "FC Barcelona", cor: "var(--club-barcelona)", forma: "circle" },
-  "Real Madrid": { academia: "La Fábrica", clube: "Real Madrid CF", cor: "var(--club-real-madrid)", forma: "square" },
+  Barcelona: {
+    academia: "La Masia",
+    clube: "FC Barcelona",
+    cor: "var(--club-barcelona)",
+    linha: "var(--club-barcelona-linha)",
+    forma: "circle",
+  },
+  "Real Madrid": {
+    academia: "La Fábrica",
+    clube: "Real Madrid CF",
+    cor: "var(--club-real-madrid)",
+    linha: "var(--club-real-madrid-linha)",
+    forma: "square",
+  },
   "Manchester City": {
     academia: "City Football Academy",
     clube: "Manchester City FC",
     cor: "var(--club-manchester-city)",
+    linha: "var(--club-manchester-city-linha)",
     forma: "triangle",
   },
-  Liverpool: { academia: "The Academy", clube: "Liverpool FC", cor: "var(--club-liverpool)", forma: "diamond" },
+  Liverpool: {
+    academia: "The Academy",
+    clube: "Liverpool FC",
+    cor: "var(--club-liverpool)",
+    linha: "var(--club-liverpool-linha)",
+    forma: "diamond",
+  },
 };
 
 export function arquivoResultados(modo, pool) {

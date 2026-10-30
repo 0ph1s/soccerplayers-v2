@@ -63,8 +63,8 @@ function ArteAmostra({ jogadores }) {
               data-ponto
               d={caminhoForma(meta.forma, x, y, 1.55)}
               fill={meta.cor}
-              stroke="var(--background)"
-              strokeWidth="0.35"
+              stroke="var(--marca-contorno)"
+              strokeWidth="0.3"
             />
           );
         })}

@@ -35,7 +35,7 @@ export function CartaoAcademias({ id, dados }) {
             key={clube}
             title={`${ACADEMIAS[clube].academia}: ${n}`}
             className="rounded-full transition-[flex-grow] duration-500"
-            style={{ flexGrow: n, background: ACADEMIAS[clube].cor }}
+            style={{ flexGrow: n, background: ACADEMIAS[clube].cor, boxShadow: `inset 0 0 0 1px ${ACADEMIAS[clube].linha}` }}
           />
         ))}
       </div>
@@ -45,7 +45,11 @@ export function CartaoAcademias({ id, dados }) {
           const linha = aba === "amostra" ? null : linhaDescritiva(dados.descritiva, clube, aba);
           return (
             <article key={clube} className="rounded-xl border border-border p-4">
-              <span className="block h-1 w-8 rounded-full" style={{ background: ACADEMIAS[clube].cor }} aria-hidden="true" />
+              <span
+                className="block h-1 w-8 rounded-full"
+                style={{ background: ACADEMIAS[clube].cor, boxShadow: `inset 0 0 0 1px ${ACADEMIAS[clube].linha}` }}
+                aria-hidden="true"
+              />
               <h3 className="mt-3 truncate text-sm">{ACADEMIAS[clube].academia}</h3>
               {aba === "amostra" ? (
                 <>

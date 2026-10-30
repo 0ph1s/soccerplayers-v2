@@ -5,7 +5,7 @@ import { ACADEMIAS, INDICES, linhaDescritiva } from "@/lib/dados";
 
 function Caixa({ linha, clube }) {
   const { t, numero } = useIdioma();
-  const cor = ACADEMIAS[clube].cor;
+  const { cor, linha: corLinha } = ACADEMIAS[clube];
   if (!linha || linha.n === 0) return <div className="h-10" />;
   const descricao = `${ACADEMIAS[clube].academia}: ${t("descritiva.minimo")} ${numero(linha.minimo, 1)}, ${t("descritiva.q1")} ${numero(linha.q1, 1)}, ${t("descritiva.mediana")} ${numero(linha.mediana, 1)}, ${t("descritiva.q3")} ${numero(linha.q3, 1)}, ${t("descritiva.maximo")} ${numero(linha.maximo, 1)}`;
   return (
@@ -18,7 +18,7 @@ function Caixa({ linha, clube }) {
         style={{
           left: `${linha.q1}%`,
           width: `${linha.q3 - linha.q1}%`,
-          borderColor: cor,
+          borderColor: corLinha,
           background: `color-mix(in oklab, ${cor} 26%, transparent)`,
         }}
       />

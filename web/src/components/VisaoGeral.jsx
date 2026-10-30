@@ -44,7 +44,11 @@ export function VisaoGeral({ dados }) {
                 indice > 0 ? "xl:border-l xl:pl-6" : "",
               ].join(" ")}
             >
-              <span className="absolute top-0 left-0 h-1 w-16" style={{ background: meta.cor }} aria-hidden="true" />
+              <span
+                className="absolute top-0 left-0 h-1 w-16"
+                style={{ background: meta.cor, boxShadow: `inset 0 0 0 1px ${meta.linha}` }}
+                aria-hidden="true"
+              />
               <div className="flex items-baseline justify-between gap-4">
                 <span className="num text-[clamp(4rem,8vw,7rem)] leading-none font-medium tracking-tight">
                   {n == null ? "··" : String(n).padStart(2, "0")}

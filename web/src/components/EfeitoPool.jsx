@@ -69,7 +69,7 @@ function GraficoInclinacao({ artigo, corrigido, indice }) {
                 y1={100 - de}
                 x2="100"
                 y2={100 - para}
-                stroke={ACADEMIAS[jogador.clube]?.cor}
+                stroke={ACADEMIAS[jogador.clube]?.linha}
                 strokeWidth={mudou ? 1.6 : 1}
                 strokeOpacity={mudou ? 0.85 : 0.25}
                 vectorEffect="non-scaling-stroke"

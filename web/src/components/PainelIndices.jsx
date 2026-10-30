@@ -170,8 +170,8 @@ export function PainelIndices({ jogadores, academias }) {
                   name={ACADEMIAS[clube].academia}
                   data={visiveis.filter((j) => j.clube === clube)}
                   fill={ACADEMIAS[clube].cor}
-                  stroke="var(--background)"
-                  strokeWidth={1.5}
+                  stroke="var(--marca-contorno)"
+                  strokeWidth={1}
                   shape={ACADEMIAS[clube].forma}
                   isAnimationActive={!reduzirMovimento}
                   animationDuration={500}

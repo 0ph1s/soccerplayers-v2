@@ -81,11 +81,18 @@
     --lime: #c5f467;
     --lime-ink: #171717;
 
-    /* Academias: cor + forma identificam cada uma em todos os gráficos. */
-    --club-barcelona: #a50044;
-    --club-real-madrid: #9c7a12;
-    --club-manchester-city: #2b86c2;
-    --club-liverpool: #d8362a;
+    /* Academias: cores oficiais dos clubes + forma identificam cada uma em todos os gráficos.
+       "-linha" é a cor usada em linhas e bordas finas, onde a cor oficial some no fundo
+       (o branco do Real Madrid no tema claro). "--marca-contorno" circunda os pontos. */
+    --club-barcelona: #004d98;
+    --club-real-madrid: #ffffff;
+    --club-manchester-city: #6cabdd;
+    --club-liverpool: #c8102e;
+    --club-barcelona-linha: #004d98;
+    --club-real-madrid-linha: #171717;
+    --club-manchester-city-linha: #6cabdd;
+    --club-liverpool-linha: #c8102e;
+    --marca-contorno: rgb(23 23 23 / 0.85);
 
     --chart-1: #171717;
     --chart-2: #5f5f59;
@@ -119,10 +126,16 @@
     --lime: #c5f467;
     --lime-ink: #101110;
 
-    --club-barcelona: #e2507f;
-    --club-real-madrid: #e3bf55;
-    --club-manchester-city: #6dbdeb;
-    --club-liverpool: #ff6b57;
+    /* Mesmas cores oficiais; no escuro, o azul do Barcelona ganha uma linha mais clara para aparecer. */
+    --club-barcelona: #004d98;
+    --club-real-madrid: #ffffff;
+    --club-manchester-city: #6cabdd;
+    --club-liverpool: #c8102e;
+    --club-barcelona-linha: #3d8be0;
+    --club-real-madrid-linha: #ffffff;
+    --club-manchester-city-linha: #6cabdd;
+    --club-liverpool-linha: #e0213f;
+    --marca-contorno: rgb(241 241 235 / 0.75);
 
     --chart-1: #f1f1eb;
     --chart-2: #9b9d95;

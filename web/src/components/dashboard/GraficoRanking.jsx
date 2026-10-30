@@ -101,8 +101,8 @@ export function GraficoRanking({ jogadores }) {
                 key={payload.posicao}
                 d={caminhoForma(ACADEMIAS[payload.clube]?.forma, cx, cy, 3.4)}
                 fill={ACADEMIAS[payload.clube]?.cor}
-                stroke="var(--card)"
-                strokeWidth={1.2}
+                stroke="var(--marca-contorno)"
+                strokeWidth={0.9}
               />
             )}
             activeDot={{ r: 5, fill: "var(--card)", stroke: "var(--foreground)", strokeWidth: 2 }}
