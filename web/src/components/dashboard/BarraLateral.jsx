@@ -189,7 +189,7 @@ export function BarraLateral({
                 </button>
               ))}
             </div>
-            <BotaoTema tema={tema} alternar={alternarTema} className="size-8 rounded-md border-border" />
+            <BotaoTema tema={tema} alternar={alternarTema} className="size-8 rounded-md" />
           </div>
         )}
       </div>
