@@ -1,6 +1,6 @@
 // Página de dashboard ("/dashboard"): barra lateral e cartões com os mesmos JSONs da publicação.
 import { Menu, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { BarraLateral, ITENS_NAVEGACAO } from "@/components/dashboard/BarraLateral";
 import { CartaoAcademias } from "@/components/dashboard/CartaoAcademias";
@@ -48,6 +48,14 @@ export function Dashboard({ modo, setModo, pool, setPool, estado }) {
   const [busca, setBusca] = useState("");
   const [recolhido, setRecolhido] = useState(false);
   const [menuMovel, setMenuMovel] = useState(false);
+  // A gaveta continua montada durante a animação de fechar.
+  const [gavetaMontada, setGavetaMontada] = useState(false);
+  const gaveta = useRef(null);
+  const fundo = useRef(null);
+  const abrirGaveta = useCallback(() => {
+    setGavetaMontada(true);
+    setMenuMovel(true);
+  }, []);
   const buscaRef = useRef(null);
   const buscaMovelRef = useRef(null);
   const principal = useRef(null);
@@ -66,7 +74,7 @@ export function Dashboard({ modo, setModo, pool, setPool, estado }) {
           setRecolhido(false);
           requestAnimationFrame(() => buscaRef.current?.focus());
         } else {
-          setMenuMovel(true);
+          abrirGaveta();
           requestAnimationFrame(() => buscaMovelRef.current?.focus());
         }
       }
@@ -74,7 +82,34 @@ export function Dashboard({ modo, setModo, pool, setPool, estado }) {
     };
     window.addEventListener("keydown", aoTeclar);
     return () => window.removeEventListener("keydown", aoTeclar);
-  }, []);
+  }, [abrirGaveta]);
+
+  // Gaveta móvel: desliza da esquerda com o fundo escurecendo; ao fechar, volta e só então desmonta.
+  useGSAP(
+    () => {
+      if (!gaveta.current || !fundo.current) return;
+      const reduzir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (menuMovel) {
+        gsap.fromTo(fundo.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: reduzir ? 0 : 0.35, ease: "power2.out", overwrite: true });
+        gsap.fromTo(gaveta.current, { xPercent: -100 }, { xPercent: 0, duration: reduzir ? 0 : 0.5, ease: "power3.out", overwrite: true });
+        gsap.fromTo(
+          gaveta.current.querySelectorAll("nav li"),
+          { x: -14, autoAlpha: 0 },
+          { x: 0, autoAlpha: 1, duration: reduzir ? 0 : 0.4, ease: "power3.out", stagger: reduzir ? 0 : 0.04, delay: reduzir ? 0 : 0.15 },
+        );
+      } else {
+        gsap.to(fundo.current, { autoAlpha: 0, duration: reduzir ? 0 : 0.3, ease: "power2.in", overwrite: true });
+        gsap.to(gaveta.current, {
+          xPercent: -100,
+          duration: reduzir ? 0 : 0.35,
+          ease: "power3.in",
+          overwrite: true,
+          onComplete: () => setGavetaMontada(false),
+        });
+      }
+    },
+    { dependencies: [menuMovel, gavetaMontada] },
+  );
 
   useGSAP(
     () => {
@@ -132,15 +167,19 @@ export function Dashboard({ modo, setModo, pool, setPool, estado }) {
         <BarraLateral {...propsLateral} recolhido={recolhido} aoRecolher={() => setRecolhido((r) => !r)} buscaRef={buscaRef} />
       </aside>
 
-      {menuMovel && (
-        <div className="fixed inset-0 z-50 lg:hidden">
+      {gavetaMontada && (
+        <div className={cn("fixed inset-0 z-50 lg:hidden", !menuMovel && "pointer-events-none")}>
           <button
+            ref={fundo}
             type="button"
             aria-label={t("nav.fecharMenu")}
             onClick={() => setMenuMovel(false)}
-            className="absolute inset-0 cursor-default bg-background/70 backdrop-blur-sm"
+            className="invisible absolute inset-0 cursor-default bg-background/70 backdrop-blur-sm"
           />
-          <aside className="absolute inset-y-0 left-0 w-72 max-w-[85vw] border-r border-border bg-card shadow-2xl">
+          <aside
+            ref={gaveta}
+            className="absolute inset-y-0 left-0 w-72 max-w-[85vw] border-r border-border bg-card shadow-2xl"
+          >
             <button
               type="button"
               onClick={() => setMenuMovel(false)}
@@ -160,7 +199,8 @@ export function Dashboard({ modo, setModo, pool, setPool, estado }) {
             <div className="flex items-center gap-3">
               <button
                 type="button"
-                onClick={() => setMenuMovel(true)}
+                onClick={abrirGaveta}
+                aria-expanded={menuMovel}
                 aria-label={t("nav.abrirMenu")}
                 className="grid size-9 cursor-pointer place-items-center rounded-lg border border-border lg:hidden"
               >

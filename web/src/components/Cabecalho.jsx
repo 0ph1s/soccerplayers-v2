@@ -96,6 +96,8 @@ export function Cabecalho() {
   const ativa = useSecaoAtiva();
   const { tema, alternar } = useTema();
   const [menuAberto, setMenuAberto] = useState(false);
+  const [menuMontado, setMenuMontado] = useState(false);
+  const painelMenu = useRef(null);
   const [rolou, setRolou] = useState(false);
 
   const raiz = useRef(null);
@@ -177,9 +179,49 @@ export function Cabecalho() {
     });
   }, [ativa, idioma]);
 
+  const abrirMenu = () => {
+    setMenuMontado(true);
+    setMenuAberto(true);
+  };
+  const fecharMenu = () => setMenuAberto(false);
+
+  // Abre descendo com os itens em cascata; fecha recolhendo e só então desmonta o painel.
+  useGSAP(
+    () => {
+      const painel = painelMenu.current;
+      if (!painel) return;
+      const reduzir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const itens = painel.querySelectorAll("[data-item-menu]");
+      if (menuAberto) {
+        gsap.fromTo(
+          painel,
+          { height: 0, autoAlpha: 0 },
+          { height: "auto", autoAlpha: 1, duration: reduzir ? 0 : 0.5, ease: "power3.out", overwrite: true },
+        );
+        gsap.fromTo(
+          itens,
+          { y: 18, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: reduzir ? 0 : 0.45, ease: "power3.out", stagger: reduzir ? 0 : 0.05, delay: reduzir ? 0 : 0.1 },
+        );
+      } else {
+        gsap.to(itens, { y: -8, autoAlpha: 0, duration: reduzir ? 0 : 0.2, ease: "power2.in", stagger: reduzir ? 0 : { each: 0.03, from: "end" } });
+        gsap.to(painel, {
+          height: 0,
+          autoAlpha: 0,
+          duration: reduzir ? 0 : 0.4,
+          delay: reduzir ? 0 : 0.1,
+          ease: "power3.inOut",
+          overwrite: true,
+          onComplete: () => setMenuMontado(false),
+        });
+      }
+    },
+    { dependencies: [menuAberto, menuMontado] },
+  );
+
   useEffect(() => {
     if (!menuAberto) return undefined;
-    const aoTeclar = (evento) => evento.key === "Escape" && setMenuAberto(false);
+    const aoTeclar = (evento) => evento.key === "Escape" && fecharMenu();
     window.addEventListener("keydown", aoTeclar);
     return () => window.removeEventListener("keydown", aoTeclar);
   }, [menuAberto]);
@@ -248,10 +290,24 @@ export function Cabecalho() {
             aria-expanded={menuAberto}
             aria-controls="menu-movel"
             aria-label={menuAberto ? t("nav.fecharMenu") : t("nav.abrirMenu")}
-            onClick={() => setMenuAberto((aberto) => !aberto)}
-            className="flex size-9 cursor-pointer items-center justify-center border border-rule-strong"
+            onClick={() => (menuAberto ? fecharMenu() : abrirMenu())}
+            className="relative flex size-9 cursor-pointer items-center justify-center border border-rule-strong"
           >
-            {menuAberto ? <X className="size-4" aria-hidden="true" /> : <Menu className="size-4" aria-hidden="true" />}
+            {/* Os dois ícones ficam sobrepostos e trocam com giro e esmaecimento. */}
+            <Menu
+              aria-hidden="true"
+              className={cn(
+                "absolute size-4 transition-all duration-300 ease-out",
+                menuAberto ? "rotate-90 scale-50 opacity-0" : "rotate-0 scale-100 opacity-100",
+              )}
+            />
+            <X
+              aria-hidden="true"
+              className={cn(
+                "absolute size-4 transition-all duration-300 ease-out",
+                menuAberto ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-50 opacity-0",
+              )}
+            />
           </button>
         </div>
       </div>
@@ -262,15 +318,16 @@ export function Cabecalho() {
         className="absolute inset-x-0 -bottom-px h-0.5 origin-left scale-x-0 bg-lime"
       />
 
-      {menuAberto && (
-        <div id="menu-movel" className="border-t border-rule bg-background px-4 pt-4 pb-6 lg:hidden">
+      {menuMontado && (
+        <div id="menu-movel" ref={painelMenu} className="invisible h-0 overflow-hidden border-t border-rule bg-background px-4 lg:hidden">
+          <div className="pt-4 pb-6">
           <nav aria-label={t("nav.principal")}>
             <ul className="flex flex-col">
               {SECOES.map(({ id, chave }) => (
-                <li key={id} className="border-b border-rule">
+                <li key={id} data-item-menu className="border-b border-rule">
                   <a
                     href={`#${id}`}
-                    onClick={() => setMenuAberto(false)}
+                    onClick={fecharMenu}
                     aria-current={ativa === id ? "location" : undefined}
                     className="display block py-3 text-2xl font-semibold"
                   >
@@ -278,7 +335,7 @@ export function Cabecalho() {
                   </a>
                 </li>
               ))}
-              <li className="border-b border-rule">
+              <li data-item-menu className="border-b border-rule">
                 <Link para="/dashboard" className="display flex items-center gap-2 py-3 text-2xl font-semibold">
                   <LayoutDashboard className="size-5" aria-hidden="true" />
                   {t("nav.dashboard")}
@@ -286,7 +343,10 @@ export function Cabecalho() {
               </li>
             </ul>
           </nav>
-          <SeletorIdioma className="mt-5 gap-1" />
+          <div data-item-menu>
+            <SeletorIdioma className="mt-5 gap-1" />
+          </div>
+          </div>
         </div>
       )}
     </header>
