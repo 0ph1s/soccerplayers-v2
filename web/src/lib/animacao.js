@@ -1,13 +1,14 @@
 // GSAP registrado uma única vez. As animações só rodam sem "prefers-reduced-motion: reduce".
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother);
 
 export const COM_MOVIMENTO = "(prefers-reduced-motion: no-preference)";
 
-export { gsap, ScrollTrigger, useGSAP };
+export { gsap, ScrollSmoother, ScrollTrigger, useGSAP };
 
 /**
  * Revela os filhos marcados com data-revelar quando a seção entra na tela.

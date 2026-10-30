@@ -191,22 +191,18 @@
     }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    html {
-        scroll-behavior: smooth;
-    }
-    /* Aplicada só durante a troca de tema, para a transição não pesar no resto do tempo. */
-    .tema-transicao,
-    .tema-transicao *,
-    .tema-transicao *::before,
-    .tema-transicao *::after {
-        transition:
-            background-color 0.35s ease,
-            color 0.35s ease,
-            border-color 0.35s ease,
-            fill 0.35s ease,
-            stroke 0.35s ease !important;
-    }
+/* Troca de tema: a View Transitions API anima só a foto da tela (ver lib/tema.js),
+   então desligamos o crossfade padrão e deixamos o círculo de revelação fazer o trabalho. */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+    z-index: 1;
+}
+::view-transition-new(root) {
+    z-index: 2;
 }
 
 /* Recharts: textos e linhas herdam o tema. */

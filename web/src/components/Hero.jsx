@@ -131,7 +131,7 @@ export function Hero({ dados }) {
           </a>
         </div>
 
-        <figure className="col-span-12 mx-auto w-full max-w-[520px] lg:col-span-4 lg:mt-4 lg:max-w-none">
+        <figure data-speed="0.88" className="col-span-12 mx-auto w-full max-w-[520px] lg:col-span-4 lg:mt-4 lg:max-w-none">
           <div className="aspect-square w-full">{pronto && <ArteAmostra jogadores={jogadores} />}</div>
           <figcaption className="rotulo mt-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
             <span className="max-w-[42ch]">{t("hero.legendaArte", { n: jogadores.length || "··" })}</span>

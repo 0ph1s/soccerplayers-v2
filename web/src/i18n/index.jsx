@@ -44,9 +44,9 @@ export function ProvedorIdioma({ children }) {
     }
   }, []);
 
+  // O título da aba fica a cargo de cada página (publicação e dashboard).
   useEffect(() => {
     document.documentElement.lang = config.tag;
-    document.title = config.dicionario.meta.titulo;
   }, [config]);
 
   const valor = useMemo(() => {

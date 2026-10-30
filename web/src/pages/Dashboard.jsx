@@ -1,0 +1,233 @@
+// Página de dashboard ("/dashboard"): barra lateral e cartões com os mesmos JSONs da publicação.
+import { Menu, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
+import { BarraLateral, ITENS_NAVEGACAO } from "@/components/dashboard/BarraLateral";
+import { CartaoAcademias } from "@/components/dashboard/CartaoAcademias";
+import { CartaoPares } from "@/components/dashboard/CartaoPares";
+import { CartaoKpi, Selo } from "@/components/dashboard/Cartoes";
+import { GraficoMedianas } from "@/components/dashboard/GraficoMedianas";
+import { GraficoRanking } from "@/components/dashboard/GraficoRanking";
+import { TabelaDashboard } from "@/components/dashboard/TabelaDashboard";
+import { useIdioma } from "@/i18n";
+import { COM_MOVIMENTO, gsap, useGSAP } from "@/lib/animacao";
+import { ACADEMIAS, arquivoResultados, comandoResultados, useResultadosDosDoisPools } from "@/lib/dados";
+import { useTema } from "@/lib/tema";
+import { cn } from "@/lib/utils";
+
+function useCartaoAtivo() {
+  const [ativo, setAtivo] = useState(ITENS_NAVEGACAO[0].id);
+  useEffect(() => {
+    const observador = new IntersectionObserver(
+      (entradas) => entradas.forEach((entrada) => entrada.isIntersecting && setAtivo(entrada.target.id)),
+      { rootMargin: "-30% 0px -60% 0px" },
+    );
+    ITENS_NAVEGACAO.forEach(({ id }) => {
+      const elemento = document.getElementById(id);
+      if (elemento) observador.observe(elemento);
+    });
+    return () => observador.disconnect();
+  }, []);
+  return ativo;
+}
+
+function diferenca(numero, valor) {
+  if (valor == null || Number.isNaN(valor)) return "—";
+  if (Math.abs(valor) < 1e-9) return numero(0, 4);
+  return `${valor > 0 ? "+" : "−"}${numero(Math.abs(valor), 4)}`;
+}
+
+export function Dashboard({ modo, setModo, pool, setPool, estado }) {
+  const { t, numero, pValor, data } = useIdioma();
+  const { tema, alternar } = useTema();
+  const { dados, carregando, erro } = estado;
+  const doisPools = useResultadosDosDoisPools(modo);
+  const outroPool = pool === "artigo" ? "corrigido" : "artigo";
+  const outro = doisPools[outroPool];
+
+  const [busca, setBusca] = useState("");
+  const [recolhido, setRecolhido] = useState(false);
+  const [menuMovel, setMenuMovel] = useState(false);
+  const buscaRef = useRef(null);
+  const buscaMovelRef = useRef(null);
+  const principal = useRef(null);
+  const ativo = useCartaoAtivo();
+
+  useEffect(() => {
+    document.title = `${t("painel.titulo")} · Soccer Analytics`;
+  }, [t]);
+
+  // Ctrl/⌘ K foca a busca; Esc fecha o menu móvel.
+  useEffect(() => {
+    const aoTeclar = (evento) => {
+      if ((evento.metaKey || evento.ctrlKey) && evento.key.toLowerCase() === "k") {
+        evento.preventDefault();
+        if (window.matchMedia("(min-width: 1024px)").matches) {
+          setRecolhido(false);
+          requestAnimationFrame(() => buscaRef.current?.focus());
+        } else {
+          setMenuMovel(true);
+          requestAnimationFrame(() => buscaMovelRef.current?.focus());
+        }
+      }
+      if (evento.key === "Escape") setMenuMovel(false);
+    };
+    window.addEventListener("keydown", aoTeclar);
+    return () => window.removeEventListener("keydown", aoTeclar);
+  }, []);
+
+  useGSAP(
+    () => {
+      if (!dados) return undefined;
+      const mm = gsap.matchMedia();
+      mm.add(COM_MOVIMENTO, () => {
+        gsap.from("[data-cartao]", { y: 24, autoAlpha: 0, duration: 0.8, ease: "power3.out", stagger: 0.06 });
+      });
+      return () => mm.revert();
+    },
+    { scope: principal, dependencies: [Boolean(dados)], revertOnUpdate: true },
+  );
+
+  const irPara = (id) => {
+    setMenuMovel(false);
+    const reduzir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.getElementById(id)?.scrollIntoView({ behavior: reduzir ? "auto" : "smooth", block: "start" });
+  };
+
+  const propsLateral = {
+    busca,
+    aoBuscar: setBusca,
+    aoConfirmarBusca: () => irPara("dash-jogadores"),
+    ativa: ativo,
+    aoIrPara: irPara,
+    tema,
+    alternarTema: alternar,
+    modo,
+    setModo,
+    pool,
+    setPool,
+  };
+
+  const testes = dados
+    ? ["indice_tecnico", "indice_explosivo"].map((indice) => ({
+        indice,
+        atual: dados.kruskal.find((k) => k.indice === indice),
+        outro: outro?.kruskal.find((k) => k.indice === indice),
+      }))
+    : [];
+  const maiorGrupo = dados
+    ? dados.academias
+        .map((clube) => ({ clube, n: dados.jogadores.filter((j) => j.clube === clube).length }))
+        .reduce((maior, grupo) => (grupo.n > maior.n ? grupo : maior))
+    : null;
+
+  return (
+    <div className="min-h-svh bg-background text-foreground lg:flex">
+      <aside
+        className={cn(
+          "sticky top-0 hidden h-svh shrink-0 border-r border-border bg-card/40 transition-[width] duration-500 ease-out lg:block",
+          recolhido ? "w-[72px]" : "w-64",
+        )}
+      >
+        <BarraLateral {...propsLateral} recolhido={recolhido} aoRecolher={() => setRecolhido((r) => !r)} buscaRef={buscaRef} />
+      </aside>
+
+      {menuMovel && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <button
+            type="button"
+            aria-label={t("nav.fecharMenu")}
+            onClick={() => setMenuMovel(false)}
+            className="absolute inset-0 cursor-default bg-background/70 backdrop-blur-sm"
+          />
+          <aside className="absolute inset-y-0 left-0 w-72 max-w-[85vw] border-r border-border bg-card shadow-2xl">
+            <button
+              type="button"
+              onClick={() => setMenuMovel(false)}
+              aria-label={t("nav.fecharMenu")}
+              className="absolute top-3 right-3 z-10 grid size-8 cursor-pointer place-items-center rounded-md hover:bg-muted"
+            >
+              <X className="size-4" aria-hidden="true" />
+            </button>
+            <BarraLateral {...propsLateral} movel recolhido={false} aoRecolher={() => {}} buscaRef={buscaMovelRef} />
+          </aside>
+        </div>
+      )}
+
+      <main ref={principal} className="min-w-0 flex-1 px-4 py-5 md:px-6 lg:px-8 lg:py-7">
+        <div className="mx-auto flex max-w-[1280px] flex-col gap-5">
+          <header className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setMenuMovel(true)}
+                aria-label={t("nav.abrirMenu")}
+                className="grid size-9 cursor-pointer place-items-center rounded-lg border border-border lg:hidden"
+              >
+                <Menu className="size-4" aria-hidden="true" />
+              </button>
+              <h1 className="text-2xl font-semibold tracking-tight">{t("painel.titulo")}</h1>
+            </div>
+            <p className="text-xs text-muted-foreground" role="status" aria-live="polite">
+              {erro
+                ? t("controles.erro", { arquivo: arquivoResultados(modo, pool), comando: comandoResultados(modo, pool) })
+                : carregando
+                  ? t("controles.carregando")
+                  : dados && t("controles.gerado", { data: data(dados.geradoEm) })}
+            </p>
+          </header>
+
+          {dados && (
+            <div className={cn("grid grid-cols-1 gap-4 transition-opacity duration-300 lg:grid-cols-12", carregando && "opacity-50")}>
+              <div id="dash-visao" className="grid scroll-mt-6 grid-cols-1 gap-4 sm:grid-cols-3 lg:col-span-12">
+                <CartaoKpi
+                  titulo={t("painel.kpiJogadores")}
+                  valor={dados.jogadores.length}
+                  selo={<Selo>{t("painel.academias", { n: dados.academias.length })}</Selo>}
+                  linha={t("painel.maiorGrupo", { n: maiorGrupo.n, academia: ACADEMIAS[maiorGrupo.clube].academia })}
+                />
+                {testes.map(({ indice, atual, outro: doOutro }) => (
+                  <CartaoKpi
+                    key={indice}
+                    titulo={t(indice === "indice_tecnico" ? "painel.kpiTecnico" : "painel.kpiExplosivo")}
+                    valor={`p ${pValor(atual?.p_valor)}`}
+                    selo={
+                      <Selo tipo={atual?.significativo ? "positivo" : "neutro"}>
+                        {atual?.significativo ? t("painel.sig") : t("painel.naoSig")}
+                      </Selo>
+                    }
+                    linha={
+                      <>
+                        H {numero(atual?.H, 4)}{" "}
+                        <span className="text-foreground">{diferenca(numero, doOutro ? atual?.H - doOutro.H : null)}</span>{" "}
+                        {t("painel.vsOutro", { metodo: t(`controles.${outroPool}`).toLowerCase() })}
+                      </>
+                    }
+                  />
+                ))}
+              </div>
+
+              <div className="lg:col-span-12">
+                <GraficoRanking jogadores={dados.jogadores} />
+              </div>
+
+              <div className="lg:col-span-6">
+                <CartaoAcademias id="dash-academias" dados={dados} />
+              </div>
+              <div className="lg:col-span-6">
+                <GraficoMedianas dados={dados} />
+              </div>
+
+              <div className="lg:col-span-5">
+                <CartaoPares id="dash-testes" pares={dados.pares} />
+              </div>
+              <div className="lg:col-span-7">
+                <TabelaDashboard id="dash-jogadores" jogadores={dados.jogadores} busca={busca} modo={modo} pool={pool} />
+              </div>
+            </div>
+          )}
+        </div>
+      </main>
+    </div>
+  );
+}
