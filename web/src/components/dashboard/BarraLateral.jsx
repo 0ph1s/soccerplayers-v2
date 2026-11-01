@@ -10,6 +10,7 @@ import {
   Search,
   Settings,
   Users,
+  X,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -83,17 +84,17 @@ export function BarraLateral({
           <span className="display grid size-7 place-items-center rounded-md bg-lime text-[11px] font-bold text-lime-ink">SA</span>
           {!compacta && <span className="display text-sm font-semibold tracking-tight">SOCCER/ANALYTICS</span>}
         </Link>
-        {!movel && (
-          <button
-            type="button"
-            onClick={aoRecolher}
-            aria-label={recolhido ? t("painel.expandir") : t("painel.recolher")}
-            title={recolhido ? t("painel.expandir") : t("painel.recolher")}
-            className="grid size-8 cursor-pointer place-items-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          >
-            <PanelLeft className="size-4" aria-hidden="true" />
-          </button>
-        )}
+        {/* Na gaveta do celular o mesmo lugar vira o botão de fechar, dentro do fluxo (e não
+            sobreposto ao canto, onde o hover cobria a barra de rolagem). */}
+        <button
+          type="button"
+          onClick={aoRecolher}
+          aria-label={movel ? t("nav.fecharMenu") : recolhido ? t("painel.expandir") : t("painel.recolher")}
+          title={movel ? undefined : recolhido ? t("painel.expandir") : t("painel.recolher")}
+          className="grid size-8 shrink-0 cursor-pointer place-items-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        >
+          {movel ? <X className="size-4" aria-hidden="true" /> : <PanelLeft className="size-4" aria-hidden="true" />}
+        </button>
       </div>
 
       {compacta ? (

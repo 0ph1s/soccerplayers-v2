@@ -94,6 +94,11 @@
     --club-liverpool-linha: #c8102e;
     --marca-contorno: rgb(23 23 23 / 0.85);
 
+    /* Barras de rolagem acompanham o tema (ver @layer base). */
+    color-scheme: light;
+    --rolagem: #c9c8bf;
+    --rolagem-hover: #9a9a92;
+
     --chart-1: #171717;
     --chart-2: #5f5f59;
     --chart-3: #9a9a92;
@@ -137,6 +142,10 @@
     --club-liverpool-linha: #e0213f;
     --marca-contorno: rgb(241 241 235 / 0.75);
 
+    color-scheme: dark;
+    --rolagem: #3a3f3a;
+    --rolagem-hover: #6b6e67;
+
     --chart-1: #f1f1eb;
     --chart-2: #9b9d95;
     --chart-3: #6b6e67;
@@ -147,6 +156,12 @@
 @layer base {
     * {
         @apply border-border outline-ring/50;
+        /* Barra fina, polegar na cor do tema e trilho transparente (some no fundo de cada área). */
+        scrollbar-width: thin;
+        scrollbar-color: var(--rolagem) transparent;
+    }
+    *:hover {
+        scrollbar-color: var(--rolagem-hover) transparent;
     }
     html {
         @apply font-sans;

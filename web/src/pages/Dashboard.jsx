@@ -1,5 +1,5 @@
 // Página de dashboard ("/dashboard"): barra lateral e cartões com os mesmos JSONs da publicação.
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { BarraLateral, ITENS_NAVEGACAO } from "@/components/dashboard/BarraLateral";
@@ -209,15 +209,7 @@ export function Dashboard({ modo, setModo, pool, setPool, estado }) {
             ref={gaveta}
             className="absolute inset-y-0 left-0 w-72 max-w-[85vw] border-r border-border bg-card shadow-2xl"
           >
-            <button
-              type="button"
-              onClick={() => setMenuMovel(false)}
-              aria-label={t("nav.fecharMenu")}
-              className="absolute top-3 right-3 z-10 grid size-8 cursor-pointer place-items-center rounded-md hover:bg-muted"
-            >
-              <X className="size-4" aria-hidden="true" />
-            </button>
-            <BarraLateral {...propsLateral} movel recolhido={false} aoRecolher={() => {}} buscaRef={buscaMovelRef} />
+            <BarraLateral {...propsLateral} movel recolhido={false} aoRecolher={() => setMenuMovel(false)} buscaRef={buscaMovelRef} />
           </aside>
         </div>
       )}
