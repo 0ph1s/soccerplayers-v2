@@ -71,13 +71,13 @@ export function TabelaDashboard({ id, jogadores, busca, modo, pool }) {
         </button>
       }
     >
-      <div className="max-h-[440px] overflow-auto rounded-xl border border-border" tabIndex={0} aria-label={t("painel.tabelaTitulo")}>
-        <table className="w-full min-w-[620px] text-sm">
-          <thead className="sticky top-0 z-10 bg-card text-xs text-muted-foreground">
-            <tr className="border-b border-border text-left">
-              <th scope="col" className="px-3 py-2 font-normal">{t("tabela.jogador")}</th>
-              <th scope="col" className="px-3 py-2 font-normal">{t("tabela.academia")}</th>
-              <th scope="col" className="px-3 py-2 font-normal">{t("tabela.posicao")}</th>
+      <div className="tabela-moldura max-h-[440px]" tabIndex={0} aria-label={t("painel.tabelaTitulo")}>
+        <table className="tabela tabela-compacta">
+          <thead>
+            <tr>
+              <th scope="col" className="coluna-fixa">{t("tabela.jogador")}</th>
+              <th scope="col">{t("tabela.academia")}</th>
+              <th scope="col">{t("tabela.posicao")}</th>
               {COLUNAS.map((coluna) => {
                 const ativa = ordem.chave === coluna.chave;
                 const Icone = !ativa ? ArrowUpDown : ordem.direcao === "desc" ? ArrowDown : ArrowUp;
@@ -86,7 +86,7 @@ export function TabelaDashboard({ id, jogadores, busca, modo, pool }) {
                     key={coluna.chave}
                     scope="col"
                     aria-sort={ativa ? (ordem.direcao === "desc" ? "descending" : "ascending") : "none"}
-                    className="px-3 py-2 text-right font-normal"
+                    className="text-right"
                   >
                     <button
                       type="button"
@@ -104,18 +104,18 @@ export function TabelaDashboard({ id, jogadores, busca, modo, pool }) {
           </thead>
           <tbody>
             {linhas.map((j) => (
-              <tr key={j.player_id} className="border-b border-border transition-colors last:border-b-0 hover:bg-muted/60">
-                <th scope="row" className="px-3 py-2.5 text-left font-medium">{j.nome}</th>
-                <td className="px-3 py-2.5">
+              <tr key={j.player_id}>
+                <th scope="row" className="coluna-fixa">{j.nome}</th>
+                <td>
                   <span className="inline-flex items-center gap-2 text-muted-foreground">
                     <MarcaAcademia clube={j.clube} tamanho={10} />
                     {ACADEMIAS[j.clube]?.academia}
                   </span>
                 </td>
-                <td className="px-3 py-2.5 text-muted-foreground">{t(`posicoes.${j.position}`)}</td>
-                <td className="px-3 py-2.5 text-right tabular-nums">{numero(j.indice_tecnico, 1)}</td>
-                <td className="px-3 py-2.5 text-right tabular-nums">{numero(j.indice_explosivo, 1)}</td>
-                <td className="px-3 py-2.5 text-right tabular-nums">{numero(j.idade_estreia, 1)}</td>
+                <td className="text-muted-foreground">{t(`posicoes.${j.position}`)}</td>
+                <td className="text-right">{numero(j.indice_tecnico, 1)}</td>
+                <td className="text-right">{numero(j.indice_explosivo, 1)}</td>
+                <td className="text-right">{numero(j.idade_estreia, 1)}</td>
               </tr>
             ))}
           </tbody>

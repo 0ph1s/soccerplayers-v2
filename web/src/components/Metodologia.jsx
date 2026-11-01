@@ -12,28 +12,30 @@ const PASSOS = ["amostra", "valores", "percentis", "indices", "testes", "bonferr
 function TabelaPesos({ indice }) {
   const { t, numero } = useIdioma();
   return (
-    <table className="w-full text-sm">
-      <caption className="display mb-3 text-left text-xl font-semibold">{t(`indices.${indice}`)}</caption>
-      <thead>
-        <tr className="border-y border-rule-strong text-left text-muted-foreground">
-          <th scope="col" className="py-2 pr-3 font-normal">{t("metodo.tabelaPesos.metrica")}</th>
-          <th scope="col" className="hidden py-2 pr-3 font-normal sm:table-cell">{t("metodo.tabelaPesos.fonte")}</th>
-          <th scope="col" className="py-2 text-right font-normal" colSpan={2}>{t("metodo.tabelaPesos.peso")}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {PESOS[indice].map(({ metrica, fonte, peso }) => (
-          <tr key={metrica} className="border-b border-rule">
-            <th scope="row" className="py-2 pr-3 text-left font-normal">{t(`metricas.${metrica}`)}</th>
-            <td className="hidden py-2 pr-3 text-muted-foreground sm:table-cell">{t(`metodo.fontes.${fonte}`)}</td>
-            <td className="num py-2 pr-3 text-right">{numero(peso, 1)}</td>
-            <td className="w-16 py-2" aria-hidden="true">
-              <div className="h-1.5 bg-foreground" style={{ width: `${(peso / MAIOR_PESO) * 100}%` }} />
-            </td>
+    <div className="tabela-moldura">
+      <table className="tabela tabela-compacta">
+        <caption className="display text-lg font-semibold">{t(`indices.${indice}`)}</caption>
+        <thead>
+          <tr>
+            <th scope="col">{t("metodo.tabelaPesos.metrica")}</th>
+            <th scope="col" className="hidden sm:table-cell">{t("metodo.tabelaPesos.fonte")}</th>
+            <th scope="col" className="text-right" colSpan={2}>{t("metodo.tabelaPesos.peso")}</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {PESOS[indice].map(({ metrica, fonte, peso }) => (
+            <tr key={metrica}>
+              <th scope="row">{t(`metricas.${metrica}`)}</th>
+              <td className="hidden text-muted-foreground sm:table-cell">{t(`metodo.fontes.${fonte}`)}</td>
+              <td className="border-r-0 text-right">{numero(peso, 1)}</td>
+              <td className="w-16 min-w-16" aria-hidden="true">
+                <div className="h-1.5 bg-foreground" style={{ width: `${(peso / MAIOR_PESO) * 100}%` }} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -75,7 +77,7 @@ export function Metodologia() {
             <div className="col-span-12 md:col-span-6">
               <p className="max-w-[62ch] leading-relaxed text-muted-foreground">{t(`metodo.${passo}Texto`)}</p>
               {passo === "indices" && (
-                <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-8">
+                <div className="mt-8 grid grid-cols-1 gap-6">
                   <TabelaPesos indice="indice_tecnico" />
                   <TabelaPesos indice="indice_explosivo" />
                 </div>
@@ -100,30 +102,30 @@ export function Metodologia() {
           <p className="mt-3 max-w-[36ch] text-sm leading-relaxed text-muted-foreground">{t("metodo.validacaoTexto")}</p>
         </div>
         <div className="col-span-12 lg:col-span-9" data-revelar="bloco">
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[640px] text-sm">
+          <div className="tabela-moldura">
+            <table className="tabela">
               <thead>
-                <tr className="border-y border-rule-strong text-left text-muted-foreground">
-                  <th scope="col" className="py-2 pr-4 font-normal">{t("metodo.tabelaValidacao.resultado")}</th>
-                  <th scope="col" className="py-2 pr-4 text-right font-normal">{t("metodo.tabelaValidacao.artigo")}</th>
-                  <th scope="col" className="py-2 pr-4 text-right font-normal">{t("metodo.tabelaValidacao.projeto")}</th>
-                  <th scope="col" className="py-2 text-right font-normal">{t("metodo.tabelaValidacao.situacao")}</th>
+                <tr>
+                  <th scope="col">{t("metodo.tabelaValidacao.resultado")}</th>
+                  <th scope="col" className="text-right">{t("metodo.tabelaValidacao.artigo")}</th>
+                  <th scope="col" className="text-right">{t("metodo.tabelaValidacao.projeto")}</th>
+                  <th scope="col" className="text-right">{t("metodo.tabelaValidacao.situacao")}</th>
                 </tr>
               </thead>
               <tbody>
                 {VALIDACAO.map((linha) => (
-                  <tr key={linha.chave} className="border-b border-rule">
-                    <th scope="row" className="py-2.5 pr-4 text-left font-normal">{t(`metodo.linhasValidacao.${linha.chave}`)}</th>
-                    <td className="num py-2.5 pr-4 text-right">
+                  <tr key={linha.chave}>
+                    <th scope="row">{t(`metodo.linhasValidacao.${linha.chave}`)}</th>
+                    <td className="text-right">
                       <ValorValidacao linha={linha} lado="artigo" />
                     </td>
-                    <td className="num py-2.5 pr-4 text-right">
+                    <td className="text-right">
                       <ValorValidacao linha={linha} lado="projeto" />
                     </td>
-                    <td className="py-2.5 text-right">
+                    <td className="text-right">
                       <span
                         className={cn(
-                          "num inline-block px-2 py-0.5 text-xs",
+                          "inline-block rounded-md px-2 py-0.5 text-xs",
                           linha.igual ? "border border-rule-strong" : "bg-foreground text-background",
                         )}
                       >

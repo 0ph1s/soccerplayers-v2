@@ -295,10 +295,11 @@ export function Dashboard({ modo, setModo, pool, setPool, estado }) {
                 <GraficoMedianas dados={dados} />
               </div>
 
-              <div className="lg:col-span-5">
+              {/* Tabelas em largura total: lado a lado, as colunas não cabiam sem rolagem horizontal. */}
+              <div className="lg:col-span-12">
                 <CartaoPares id="dash-testes" pares={dados.pares} />
               </div>
-              <div className="lg:col-span-7">
+              <div className="lg:col-span-12">
                 <TabelaDashboard id="dash-jogadores" jogadores={dados.jogadores} busca={busca} modo={modo} pool={pool} />
               </div>
             </div>

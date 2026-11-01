@@ -23,7 +23,7 @@ function CabecalhoOrdenavel({ coluna, ordem, aoOrdenar }) {
     <th
       scope="col"
       aria-sort={ativa ? (ordem.direcao === "desc" ? "descending" : "ascending") : "none"}
-      className="py-2 pr-4 text-right font-normal"
+      className="text-right"
     >
       <button
         type="button"
@@ -147,13 +147,13 @@ export function TabelaJogadores({ jogadores, academias, modo, pool }) {
           </p>
         </div>
 
-        <div className="mt-4 max-h-[640px] overflow-auto border-y border-rule-strong" tabIndex={0} aria-label={t("tabela.titulo")}>
-          <table className="w-full min-w-[720px] text-sm">
-            <thead className="sticky top-0 z-10 bg-background">
-              <tr className="border-b border-rule-strong text-left text-muted-foreground">
-                <th scope="col" className="sticky left-0 bg-background py-2 pr-4 font-normal">{t("tabela.jogador")}</th>
-                <th scope="col" className="py-2 pr-4 font-normal">{t("tabela.academia")}</th>
-                <th scope="col" className="py-2 pr-4 font-normal">{t("tabela.posicao")}</th>
+        <div className="tabela-moldura mt-4 max-h-[640px]" tabIndex={0} aria-label={t("tabela.titulo")}>
+          <table className="tabela">
+            <thead>
+              <tr>
+                <th scope="col" className="coluna-fixa">{t("tabela.jogador")}</th>
+                <th scope="col">{t("tabela.academia")}</th>
+                <th scope="col">{t("tabela.posicao")}</th>
                 <CabecalhoOrdenavel coluna={COLUNAS_ORDENAVEIS[2]} ordem={ordem} aoOrdenar={aoOrdenar} />
                 <CabecalhoOrdenavel coluna={COLUNAS_ORDENAVEIS[0]} ordem={ordem} aoOrdenar={aoOrdenar} />
                 <CabecalhoOrdenavel coluna={COLUNAS_ORDENAVEIS[1]} ordem={ordem} aoOrdenar={aoOrdenar} />
@@ -161,20 +161,18 @@ export function TabelaJogadores({ jogadores, academias, modo, pool }) {
             </thead>
             <tbody>
               {linhas.map((jogador) => (
-                <tr key={jogador.player_id} className="border-b border-rule transition-colors hover:bg-foreground/[0.04]">
-                  <th scope="row" className="sticky left-0 bg-background py-2.5 pr-4 text-left font-medium">
-                    {jogador.nome}
-                  </th>
-                  <td className="py-2.5 pr-4">
+                <tr key={jogador.player_id}>
+                  <th scope="row" className="coluna-fixa">{jogador.nome}</th>
+                  <td>
                     <span className="inline-flex items-center gap-2">
                       <MarcaAcademia clube={jogador.clube} tamanho={10} />
                       {ACADEMIAS[jogador.clube]?.academia ?? jogador.clube}
                     </span>
                   </td>
-                  <td className="py-2.5 pr-4 text-muted-foreground">{t(`posicoes.${jogador.position}`)}</td>
-                  <td className="num py-2.5 pr-4 text-right">{numero(jogador.idade_estreia, 1)}</td>
-                  <td className="num py-2.5 pr-4 text-right">{numero(jogador.indice_tecnico, 1)}</td>
-                  <td className="num py-2.5 pr-4 text-right">{numero(jogador.indice_explosivo, 1)}</td>
+                  <td className="text-muted-foreground">{t(`posicoes.${jogador.position}`)}</td>
+                  <td className="text-right">{numero(jogador.idade_estreia, 1)}</td>
+                  <td className="text-right">{numero(jogador.indice_tecnico, 1)}</td>
+                  <td className="text-right">{numero(jogador.indice_explosivo, 1)}</td>
                 </tr>
               ))}
             </tbody>

@@ -57,34 +57,34 @@ function BlocoIndice({ descritiva, academias, indice }) {
         </div>
       </div>
 
-      <div className="mt-8 overflow-x-auto">
-        <table className="w-full min-w-[520px] text-sm">
+      <div className="tabela-moldura mt-8">
+        <table className="tabela tabela-compacta">
           <caption className="sr-only">
             {t("descritiva.titulo")}: {t(`indices.${indice}`)}
           </caption>
           <thead>
-            <tr className="border-b border-rule-strong text-left text-muted-foreground">
-              <th scope="col" className="py-2 pr-4 font-normal">{t("descritiva.academia")}</th>
-              <th scope="col" className="py-2 pr-4 text-right font-normal">{t("descritiva.n")}</th>
-              <th scope="col" className="py-2 pr-4 text-right font-normal">{t("descritiva.mediana")}</th>
-              <th scope="col" className="py-2 pr-4 text-right font-normal">{t("descritiva.q1")}</th>
-              <th scope="col" className="py-2 pr-4 text-right font-normal">{t("descritiva.q3")}</th>
-              <th scope="col" className="py-2 pr-4 text-right font-normal">{t("descritiva.minimo")}</th>
-              <th scope="col" className="py-2 text-right font-normal">{t("descritiva.maximo")}</th>
+            <tr>
+              <th scope="col">{t("descritiva.academia")}</th>
+              <th scope="col" className="text-right">{t("descritiva.n")}</th>
+              <th scope="col" className="text-right">{t("descritiva.mediana")}</th>
+              <th scope="col" className="text-right">{t("descritiva.q1")}</th>
+              <th scope="col" className="text-right">{t("descritiva.q3")}</th>
+              <th scope="col" className="text-right">{t("descritiva.minimo")}</th>
+              <th scope="col" className="text-right">{t("descritiva.maximo")}</th>
             </tr>
           </thead>
-          <tbody className="num">
+          <tbody>
             {academias.map((clube) => {
               const linha = linhaDescritiva(descritiva, clube, indice);
               return (
-                <tr key={clube} className="border-b border-rule">
-                  <th scope="row" className="py-2.5 pr-4 text-left font-sans font-normal">{clube}</th>
-                  <td className="py-2.5 pr-4 text-right">{linha?.n ?? "—"}</td>
-                  <td className="py-2.5 pr-4 text-right font-medium">{numero(linha?.mediana, 1)}</td>
-                  <td className="py-2.5 pr-4 text-right">{numero(linha?.q1, 1)}</td>
-                  <td className="py-2.5 pr-4 text-right">{numero(linha?.q3, 1)}</td>
-                  <td className="py-2.5 pr-4 text-right">{numero(linha?.minimo, 1)}</td>
-                  <td className="py-2.5 text-right">{numero(linha?.maximo, 1)}</td>
+                <tr key={clube}>
+                  <th scope="row">{clube}</th>
+                  <td className="text-right">{linha?.n ?? "—"}</td>
+                  <td className="text-right font-medium">{numero(linha?.mediana, 1)}</td>
+                  <td className="text-right">{numero(linha?.q1, 1)}</td>
+                  <td className="text-right">{numero(linha?.q3, 1)}</td>
+                  <td className="text-right">{numero(linha?.minimo, 1)}</td>
+                  <td className="text-right">{numero(linha?.maximo, 1)}</td>
                 </tr>
               );
             })}

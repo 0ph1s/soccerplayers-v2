@@ -134,33 +134,33 @@ export function EfeitoPool({ modo }) {
                 {conclusaoIgual ? t("pool.conclusao") : t("pool.conclusaoAlterada")}
               </p>
             </div>
-            <div className="col-span-12 overflow-x-auto lg:col-span-9" data-revelar="bloco">
-              <table className="w-full min-w-[640px] text-sm">
+            <div className="tabela-moldura col-span-12 lg:col-span-9" data-revelar="bloco">
+              <table className="tabela">
                 <thead>
-                  <tr className="text-left text-muted-foreground">
-                    <th scope="col" rowSpan={2} className="border-y border-rule-strong py-2 pr-4 align-bottom font-normal" />
-                    <th scope="colgroup" colSpan={3} className="border-t border-rule-strong pt-2 pr-4 text-right font-normal">H</th>
-                    <th scope="colgroup" colSpan={3} className="border-t border-rule-strong pt-2 text-right font-normal">{t("kruskal.p")}</th>
+                  <tr>
+                    <th scope="col" rowSpan={2} />
+                    <th scope="colgroup" colSpan={3} className="text-center">H</th>
+                    <th scope="colgroup" colSpan={3} className="text-center">{t("kruskal.p")}</th>
                   </tr>
-                  <tr className="border-b border-rule-strong text-right text-muted-foreground">
-                    <th scope="col" className="py-2 pr-4 font-normal">{t("pool.artigo")}</th>
-                    <th scope="col" className="py-2 pr-4 font-normal">{t("pool.corrigido")}</th>
-                    <th scope="col" className="py-2 pr-4 font-normal">{t("pool.delta")}</th>
-                    <th scope="col" className="py-2 pr-4 font-normal">{t("pool.artigo")}</th>
-                    <th scope="col" className="py-2 pr-4 font-normal">{t("pool.corrigido")}</th>
-                    <th scope="col" className="py-2 font-normal">{t("pool.delta")}</th>
+                  <tr>
+                    <th scope="col" className="text-right">{t("pool.artigo")}</th>
+                    <th scope="col" className="text-right">{t("pool.corrigido")}</th>
+                    <th scope="col" className="text-right">{t("pool.delta")}</th>
+                    <th scope="col" className="text-right">{t("pool.artigo")}</th>
+                    <th scope="col" className="text-right">{t("pool.corrigido")}</th>
+                    <th scope="col" className="text-right">{t("pool.delta")}</th>
                   </tr>
                 </thead>
-                <tbody className="num">
+                <tbody>
                   {testes.map((teste) => (
-                    <tr key={teste.indice} className="border-b border-rule">
-                      <th scope="row" className="display py-4 pr-4 text-left text-xl font-semibold">{t(`indices.${teste.indice}`)}</th>
-                      <td className="py-4 pr-4 text-right">{numero(teste.artigo?.H, 4)}</td>
-                      <td className="py-4 pr-4 text-right">{numero(teste.corrigido?.H, 4)}</td>
-                      <td className="py-4 pr-4 text-right font-medium">{diferenca(numero, teste.corrigido?.H - teste.artigo?.H, 4)}</td>
-                      <td className="py-4 pr-4 text-right">{pValor(teste.artigo?.p_valor)}</td>
-                      <td className="py-4 pr-4 text-right">{pValor(teste.corrigido?.p_valor)}</td>
-                      <td className="py-4 text-right font-medium">{diferenca(numero, teste.corrigido?.p_valor - teste.artigo?.p_valor, 3)}</td>
+                    <tr key={teste.indice}>
+                      <th scope="row" className="display text-lg font-semibold">{t(`indices.${teste.indice}`)}</th>
+                      <td className="text-right">{numero(teste.artigo?.H, 4)}</td>
+                      <td className="text-right">{numero(teste.corrigido?.H, 4)}</td>
+                      <td className="text-right font-medium">{diferenca(numero, teste.corrigido?.H - teste.artigo?.H, 4)}</td>
+                      <td className="text-right">{pValor(teste.artigo?.p_valor)}</td>
+                      <td className="text-right">{pValor(teste.corrigido?.p_valor)}</td>
+                      <td className="text-right font-medium">{diferenca(numero, teste.corrigido?.p_valor - teste.artigo?.p_valor, 3)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -195,20 +195,20 @@ export function EfeitoPool({ modo }) {
             </div>
             <div className="col-span-12 flex flex-col gap-10 lg:col-span-9">
               {INDICES.map((indice) => (
-                <div key={indice} className="overflow-x-auto" data-revelar="bloco">
-                  <table className="w-full min-w-[680px] text-sm">
-                    <caption className="display mb-3 text-left text-2xl font-semibold">{t(`indices.${indice}`)}</caption>
+                <div key={indice} className="tabela-moldura" data-revelar="bloco">
+                  <table className="tabela">
+                    <caption className="display text-xl font-semibold">{t(`indices.${indice}`)}</caption>
                     <thead>
-                      <tr className="text-left text-muted-foreground">
-                        <th scope="col" rowSpan={2} className="border-y border-rule-strong py-2 pr-4 align-bottom font-normal">{t("pares.par")}</th>
-                        <th scope="colgroup" colSpan={2} className="border-t border-rule-strong pt-2 pr-4 text-right font-normal">{t("pares.pBruto")}</th>
-                        <th scope="colgroup" colSpan={2} className="border-t border-rule-strong pt-2 text-right font-normal">{t("pares.rankBiserial")}</th>
+                      <tr>
+                        <th scope="col" rowSpan={2}>{t("pares.par")}</th>
+                        <th scope="colgroup" colSpan={2} className="text-center">{t("pares.pBruto")}</th>
+                        <th scope="colgroup" colSpan={2} className="text-center">{t("pares.rankBiserial")}</th>
                       </tr>
-                      <tr className="border-b border-rule-strong text-right text-muted-foreground">
-                        <th scope="col" className="py-2 pr-4 font-normal">{t("pool.artigo")}</th>
-                        <th scope="col" className="py-2 pr-4 font-normal">{t("pool.corrigido")}</th>
-                        <th scope="col" className="py-2 pr-4 font-normal">{t("pool.artigo")}</th>
-                        <th scope="col" className="py-2 font-normal">{t("pool.corrigido")}</th>
+                      <tr>
+                        <th scope="col" className="text-right">{t("pool.artigo")}</th>
+                        <th scope="col" className="text-right">{t("pool.corrigido")}</th>
+                        <th scope="col" className="text-right">{t("pool.artigo")}</th>
+                        <th scope="col" className="text-right">{t("pool.corrigido")}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -220,14 +220,14 @@ export function EfeitoPool({ modo }) {
                           );
                           const mudouP = outro && Math.abs(outro.p_valor - par.p_valor) > TOLERANCIA;
                           return (
-                            <tr key={`${par.grupo_a}-${par.grupo_b}`} className="border-b border-rule">
-                              <th scope="row" className="py-2.5 pr-4 text-left font-normal">
+                            <tr key={`${par.grupo_a}-${par.grupo_b}`}>
+                              <th scope="row">
                                 {par.grupo_a} × {par.grupo_b}
                               </th>
-                              <td className="num py-2.5 pr-4 text-right">{pValor(par.p_valor)}</td>
-                              <td className={cn("num py-2.5 pr-4 text-right", mudouP && "font-medium")}>{pValor(outro?.p_valor)}</td>
-                              <td className="num py-2.5 pr-4 text-right">{numero(par.rank_biserial, 2)}</td>
-                              <td className="num py-2.5 text-right">{numero(outro?.rank_biserial, 2)}</td>
+                              <td className="text-right">{pValor(par.p_valor)}</td>
+                              <td className={cn("text-right", mudouP && "font-medium")}>{pValor(outro?.p_valor)}</td>
+                              <td className="text-right">{numero(par.rank_biserial, 2)}</td>
+                              <td className="text-right">{numero(outro?.rank_biserial, 2)}</td>
                             </tr>
                           );
                         })}

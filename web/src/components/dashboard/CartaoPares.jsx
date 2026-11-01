@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 function Barra({ valor }) {
   const largura = Math.min(Math.abs(valor), 1) * 50;
   return (
-    <span className="relative block h-1.5 w-20 rounded-full bg-muted" aria-hidden="true">
+    <span className="relative block h-1.5 w-32 rounded-full bg-muted" aria-hidden="true">
       <span className="absolute inset-y-0 left-1/2 w-px bg-muted-foreground" />
       <span
         className="absolute inset-y-0 rounded-full bg-foreground"
@@ -40,41 +40,41 @@ export function CartaoPares({ id, pares }) {
         />
       }
     >
-      <div className="-mx-1 overflow-x-auto px-1">
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="text-left text-xs text-muted-foreground">
-            <th scope="col" className="pb-2 font-normal">{t("pares.par")}</th>
-            <th scope="col" className="pb-2 text-right font-normal">{t("pares.pAjustado")}</th>
-            <th scope="col" className="pb-2 pl-3 text-right font-normal">{t("pares.rankBiserial")}</th>
-            <th scope="col" className="hidden pb-2 sm:table-cell">
-              <span className="sr-only">{t("pares.rankBiserial")}</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {pares
-            .filter((par) => par.indice === indice)
-            .map((par) => (
-              <tr key={`${par.grupo_a}-${par.grupo_b}`} className={cn("border-t border-border", par.significativo && "bg-lime/30")}>
-                <th scope="row" className="py-2.5 pr-2 text-left font-normal">
-                  <span className="flex items-center gap-1.5">
-                    <MarcaAcademia clube={par.grupo_a} tamanho={10} />
-                    <MarcaAcademia clube={par.grupo_b} tamanho={10} />
-                    <span className="truncate">
-                      {par.grupo_a} × {par.grupo_b}
+      <div className="tabela-moldura">
+        <table className="tabela tabela-compacta">
+          <thead>
+            <tr>
+              <th scope="col">{t("pares.par")}</th>
+              <th scope="col" className="text-right">{t("pares.pAjustado")}</th>
+              <th scope="col" className="text-right">{t("pares.rankBiserial")}</th>
+              <th scope="col" className="hidden sm:table-cell">
+                <span className="sr-only">{t("pares.rankBiserial")}</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {pares
+              .filter((par) => par.indice === indice)
+              .map((par) => (
+                <tr key={`${par.grupo_a}-${par.grupo_b}`} className={cn(par.significativo && "bg-lime/30")}>
+                  <th scope="row">
+                    <span className="flex items-center gap-1.5">
+                      <MarcaAcademia clube={par.grupo_a} tamanho={10} />
+                      <MarcaAcademia clube={par.grupo_b} tamanho={10} />
+                      <span>
+                        {par.grupo_a} × {par.grupo_b}
+                      </span>
                     </span>
-                  </span>
-                </th>
-                <td className="py-2.5 text-right tabular-nums">{pValor(par.p_bonferroni)}</td>
-                <td className="py-2.5 pl-3 text-right tabular-nums">{numero(par.rank_biserial, 2)}</td>
-                <td className="hidden py-2.5 pl-3 sm:table-cell">
-                  <Barra valor={par.rank_biserial} />
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+                  </th>
+                  <td className="text-right">{pValor(par.p_bonferroni)}</td>
+                  <td className="text-right">{numero(par.rank_biserial, 2)}</td>
+                  <td className="hidden sm:table-cell">
+                    <Barra valor={par.rank_biserial} />
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
     </Cartao>
   );

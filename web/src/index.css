@@ -202,6 +202,83 @@
     .linha-mascara > span {
         display: block;
     }
+
+    /* Tabelas em grade: moldura arredondada, linhas de altura fixa, divisórias verticais finas e mono.
+       "separate" (e não "collapse") mantém as bordas presas ao cabeçalho fixo quando a tabela rola;
+       com "collapse" elas rolam junto com as linhas e o conteúdo vaza por baixo do cabeçalho. */
+    .tabela-moldura {
+        overflow: auto;
+        border: 1px solid var(--border);
+        border-radius: 0.75rem;
+        background: var(--card);
+    }
+    .tabela {
+        --tabela-altura: 2.75rem;
+        --tabela-px: 1rem;
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 0.875rem;
+    }
+    /* Cabeçalho e colunas numéricas (sempre alinhadas à direita) em mono tabular; nomes ficam na sans. */
+    .tabela thead th,
+    .tabela .text-right {
+        font-family: var(--font-mono);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.01em;
+    }
+    .tabela-compacta {
+        --tabela-altura: 2.5rem;
+        --tabela-px: 0.75rem;
+    }
+    .tabela caption {
+        padding: 0.875rem var(--tabela-px);
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+    }
+    .tabela :is(th, td) {
+        height: var(--tabela-altura);
+        padding: 0 var(--tabela-px);
+        border-bottom: 1px solid var(--border);
+        font-weight: 400;
+        text-align: left;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+    /* Divisória à direita (e não à esquerda) para funcionar com rowSpan/colSpan nos cabeçalhos agrupados. */
+    .tabela :is(th, td):not(:last-child) {
+        border-right: 1px solid var(--border);
+    }
+    .tabela thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: var(--card);
+        color: var(--muted-foreground);
+        font-size: 0.75rem;
+    }
+    .tabela tbody tr:last-child > * {
+        border-bottom: 0;
+    }
+    .tabela tbody tr {
+        transition: background-color 200ms;
+    }
+    .tabela tbody tr:hover > * {
+        background: color-mix(in oklab, var(--foreground) 5%, transparent);
+    }
+    /* Primeira coluna presa na rolagem horizontal: precisa de fundo opaco, inclusive no hover. */
+    .tabela .coluna-fixa {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        background: var(--card);
+    }
+    .tabela thead .coluna-fixa {
+        z-index: 3;
+    }
+    .tabela tbody tr:hover > .coluna-fixa {
+        background: color-mix(in oklab, var(--foreground) 5%, var(--card));
+    }
 }
 
 /* Troca de tema: a View Transitions API anima só a foto da tela (ver lib/tema.js),

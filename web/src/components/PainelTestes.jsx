@@ -30,28 +30,25 @@ export function PainelTestes({ pares }) {
 
       <div className="col-span-12 flex flex-col gap-10 lg:col-span-9">
         {INDICES.map((indice) => (
-          <div key={indice} className="overflow-x-auto" data-revelar="bloco">
-            <table className="w-full min-w-[640px] text-sm">
-              <caption className="display mb-3 text-left text-2xl font-semibold">{t(`indices.${indice}`)}</caption>
+          <div key={indice} className="tabela-moldura" data-revelar="bloco">
+            <table className="tabela">
+              <caption className="display text-xl font-semibold">{t(`indices.${indice}`)}</caption>
               <thead>
-                <tr className="border-y border-rule-strong text-left text-muted-foreground">
-                  <th scope="col" className="py-2 pr-4 font-normal">{t("pares.par")}</th>
-                  <th scope="col" className="py-2 pr-4 text-right font-normal">{t("pares.pBruto")}</th>
-                  <th scope="col" className="py-2 pr-4 text-right font-normal">{t("pares.pAjustado")}</th>
-                  <th scope="col" className="py-2 pr-4 text-right font-normal">{t("pares.difMedianas")}</th>
-                  <th scope="col" className="py-2 text-right font-normal" colSpan={2}>{t("pares.rankBiserial")}</th>
+                <tr>
+                  <th scope="col">{t("pares.par")}</th>
+                  <th scope="col" className="text-right">{t("pares.pBruto")}</th>
+                  <th scope="col" className="text-right">{t("pares.pAjustado")}</th>
+                  <th scope="col" className="text-right">{t("pares.difMedianas")}</th>
+                  <th scope="col" className="text-right" colSpan={2}>{t("pares.rankBiserial")}</th>
                 </tr>
               </thead>
               <tbody>
                 {pares
                   .filter((par) => par.indice === indice)
                   .map((par) => (
-                    <tr
-                      key={`${par.grupo_a}-${par.grupo_b}`}
-                      className={cn("border-b border-rule", par.significativo && "bg-lime/40")}
-                    >
-                      <th scope="row" className="py-2.5 pr-4 text-left font-normal">
-                        <span className="inline-flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <tr key={`${par.grupo_a}-${par.grupo_b}`} className={cn(par.significativo && "bg-lime/40")}>
+                      <th scope="row">
+                        <span className="inline-flex items-center gap-2">
                           <span className="inline-flex items-center gap-1.5">
                             <MarcaAcademia clube={par.grupo_a} tamanho={10} />
                             {par.grupo_a}
@@ -63,11 +60,11 @@ export function PainelTestes({ pares }) {
                           </span>
                         </span>
                       </th>
-                      <td className="num py-2.5 pr-4 text-right">{pValor(par.p_valor)}</td>
-                      <td className="num py-2.5 pr-4 text-right">{pValor(par.p_bonferroni)}</td>
-                      <td className="num py-2.5 pr-4 text-right">{numero(par.diferenca_medianas, 2)}</td>
-                      <td className="num py-2.5 pr-3 text-right">{numero(par.rank_biserial, 2)}</td>
-                      <td className="py-2.5">
+                      <td className="text-right">{pValor(par.p_valor)}</td>
+                      <td className="text-right">{pValor(par.p_bonferroni)}</td>
+                      <td className="text-right">{numero(par.diferenca_medianas, 2)}</td>
+                      <td className="border-r-0 text-right">{numero(par.rank_biserial, 2)}</td>
+                      <td className="w-px">
                         <BarraEfeito valor={par.rank_biserial} />
                       </td>
                     </tr>
