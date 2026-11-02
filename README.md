@@ -6,6 +6,24 @@ Reconstrução do projeto de análise comparativa de academias de formação de 
 Escopo: quatro academias (La Masia, La Fábrica, City Football Academy e The Academy), índices técnico e explosivo,
 Kruskal-Wallis, Mann-Whitney com correção de Bonferroni e tamanho de efeito. O resultado indica **associação, não causa**.
 
+## Projeto base
+
+Este trabalho parte do repositório [otacs-dev/soccerplayers](https://github.com/otacs-dev/soccerplayers). Dele foram
+aproveitados:
+
+- a lista de 35 jogadores validados à mão (`data/manual/selecao_formados.csv`);
+- os valores de snapshot do Sofascore (`data/manual/snapshot_valores_v1.csv`, copiado de `percentis_metricas.csv`);
+- as métricas de gols, assistências e altura do modo `snapshot`.
+
+A implementação foi refeita do zero a partir do artigo: pipeline em Python, testes, dashboard e a documentação do método.
+
+## Integrantes
+
+- Arthur Martins
+- Guilherme Onorio
+- Octávio Teodoro
+- Peterson Carara
+
 ## Como executar
 
 Requisitos: Python 3.11+, [uv](https://docs.astral.sh/uv/) e Node.js 20+.
